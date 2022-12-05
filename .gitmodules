@@ -1,0 +1,6 @@
+[submodule "lib/docker-stacks"]
+	path = lib/docker-stacks
+	url = https://github.com/jupyter/docker-stacks
+[submodule "lib/postgres-cstore"]
+	path = lib/postgres-cstore
+	url = https://github.com/takahish/postgres-cstore.git
