@@ -1,0 +1,54 @@
+version: "3"
+services:
+  postgres-cstore:
+    image: takahish/postgres-cstore:12.11.2
+    container_name: postgres-cstore
+    restart: always
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/dwh_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/dwh_password
+      POSTGRES_DB: dwh
+    ports:
+      - 5432:5432
+    volumes:
+      - ./warehouse:/var/lib/postgresql/data
+    networks:
+      - dwh-network
+    secrets:
+      - dwh_password
+      - dwh_user
+  scipy-notebook:
+    image: scipy-notebook:3.10.5
+    build:
+      context: ./lib/docker-stacks/scipy-notebook/
+      dockerfile: Dockerfile
+  postgres-cstore-notebook:
+    image: postgres-cstore-notebook:3.10.5.3
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: postgres-cstore-notebook
+    restart: always
+    entrypoint: >
+      jupyter-lab
+      --ip=0.0.0.0
+      --port=8888
+      --no-browser
+      --NotebookApp.token='nbuser'
+      --notebook-dir=/workspace
+    expose:
+      - 8888
+    ports:
+      - 127.0.0.1:8888:8888
+    volumes:
+      - ./:/workspace
+    networks:
+      - dwh-network
+networks:
+  dwh-network:
+    driver: bridge
+secrets:
+  dwh_password:
+    file: sec/dwh_password.txt
+  dwh_user:
+    file: sec/dwh_user.txt
