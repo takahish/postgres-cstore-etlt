@@ -33,7 +33,7 @@ services:
     depends_on:
       - postgres-cstore
   postgres-cstore-notebook:
-    image: takahish/postgres-cstore-notebook:3.10.5.3
+    image: takahish/postgres-cstore-notebook:3.10.5.4
     build:
       context: ./
       dockerfile: Dockerfile

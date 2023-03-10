@@ -54,6 +54,7 @@ RUN pip install --no-cache-dir \
     'torchvision' \
     'torchaudio' \
     'torchtext' \
+    'torchinfo' \
     --extra-index-url https://download.pytorch.org/whl/cpu && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"

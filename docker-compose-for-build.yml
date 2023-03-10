@@ -23,7 +23,7 @@ services:
       context: ./lib/docker-stacks/scipy-notebook/
       dockerfile: Dockerfile
   postgres-cstore-notebook:
-    image: postgres-cstore-notebook:3.10.5.3
+    image: takahish/postgres-cstore-notebook:3.10.5.4
     build:
       context: ./
       dockerfile: Dockerfile
